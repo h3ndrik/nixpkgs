@@ -39,13 +39,13 @@ let
 in
 effectiveStdenv.mkDerivation (finalAttrs: {
   pname = "koboldcpp";
-  version = "1.110";
+  version = "1.112.2";
 
   src = fetchFromGitHub {
     owner = "LostRuins";
     repo = "koboldcpp";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-wizg/XkNjWUeF0heK1sQQhfKRlIYBKwJmQ8fIaZ2zdE=";
+    hash = "sha256-OjARVGfZ1O4y8gZCNjhu56FXB+X3/ZjqNxkSUywQNOY=";
   };
 
   enableParallelBuilding = true;
@@ -101,15 +101,15 @@ effectiveStdenv.mkDerivation (finalAttrs: {
 
     install -Dm755 koboldcpp.py "$out/bin/koboldcpp.unwrapped"
     cp *.so "$out/bin"
-    cp embd_res/*.embd "$out/bin"
+    cp embd_res/ "$out/bin"
 
     ${lib.optionalString metalSupport ''
       cp *.metal "$out/bin"
     ''}
 
     ${lib.optionalString (!koboldLiteSupport) ''
-      rm "$out/bin/kcpp_docs.embd"
-      rm "$out/bin/klite.embd"
+      rm "$out/bin/embd_res/kcpp_docs.embd"
+      rm "$out/bin/embd_res/klite.embd"
     ''}
 
     runHook postInstall
